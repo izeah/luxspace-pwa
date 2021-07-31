@@ -79,6 +79,31 @@ registerRoute(
     })
 );
 
+registerRoute(
+    ({ url }) => url.origin.includes("qorebase.io"),
+    new NetworkFirst({
+        cacheName: "api-data",
+        plugins: [
+            new ExpirationPlugin({
+                maxAgeSeconds: 360,
+                maxEntries: 30,
+            }),
+        ],
+    })
+);
+
+registerRoute(
+    ({ url }) => /\.(jpe?g|png|svg|ico)$/i.test(url.pathname),
+    new StaleWhileRevalidate({
+        cacheName: "api-image",
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 30,
+            }),
+        ],
+    })
+);
+
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener("message", (event) => {
