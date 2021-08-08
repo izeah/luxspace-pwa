@@ -121,6 +121,11 @@ self.addEventListener("install", function (event) {
         setTimeout(resolve, 5000);
     });
 
+    event.waitUntil(
+        caches.open("assets").then(function (cache) {
+            return cache.addAll(["/carousel.js"]);
+        })
+    );
     event.waitUntil(asyncInstall);
 });
 self.addEventListener("activate", function (event) {

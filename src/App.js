@@ -1,4 +1,6 @@
 import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import Header from "./components/Header.js";
 import Hero from "./components/Hero.js";
 import Browse from "./components/Browse.js";
@@ -8,6 +10,7 @@ import AsideMenu from "./components/AsideMenu.js";
 import Footer from "./components/Footer.js";
 import Offline from "./components/Offline.js";
 import Splash from "./pages/Splash.js";
+import Profile from "./pages/Profile.js";
 
 function App() {
     const [items, setItems] = React.useState([]);
@@ -34,11 +37,6 @@ function App() {
 
                 const { nodes } = await response.json();
                 setItems(nodes);
-
-                const script = document.createElement("script");
-                script.src = "/carousel.js";
-                script.async = false;
-                document.body.appendChild(script);
             })();
 
             handleOfflineStatus();
@@ -47,6 +45,11 @@ function App() {
 
             setTimeout(() => {
                 setIsLoading(false);
+
+                const script = document.createElement("script");
+                script.src = "/carousel.js";
+                script.async = false;
+                document.body.appendChild(script);
             }, 1500);
 
             return function () {
@@ -76,4 +79,11 @@ function App() {
     );
 }
 
-export default App;
+export default function Routes() {
+    return (
+        <Router>
+            <Route path="/" exact component={App}></Route>
+            <Route path="/profile" exact component={Profile}></Route>
+        </Router>
+    );
+}
