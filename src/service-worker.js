@@ -131,3 +131,12 @@ self.addEventListener("install", function (event) {
 self.addEventListener("activate", function (event) {
     console.log("SW activate");
 });
+
+self.addEventListener("push", function (event) {
+    event.waitUntil(
+        self.registration.showNotification("LuxSpace", {
+            icon: "./icon-120.png",
+            body: event.data.text(),
+        })
+    );
+});
