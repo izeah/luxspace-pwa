@@ -20,7 +20,7 @@ function subscribe() {
         "BCs6zOnnXU0yBeaInWZtNCmmcazaEGfllIbEhawImY1mSJJ3cF0MoljBR050lfxWyvkMRweJDimYl5y43F-Blb8";
 
     try {
-        const sub = global.registration.pushManager.subscribe({
+        global.registration.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: urlB64ToUint8Array(key),
         });
